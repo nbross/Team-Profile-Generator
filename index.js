@@ -8,13 +8,17 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const jest = require('jest');
 const path = require('path');
+//Page Generator
+const buildPage = require('./src/generate-page');
+//Empty Team Members Array
+const teamMembersArray = [];
 
-const promptUser = () => {
+const promptAddManager = () => {
     return inquirer.prompt ([
         {
             type: 'input',
             name: 'name',
-            message: 'What is your name?',
+            message: 'What is your name? (Required)',
             validate: nameInput => {
                 if (nameInput) {
                     return true;
@@ -27,12 +31,13 @@ const promptUser = () => {
         {
             type: 'input',
             name: 'id',
-            message: 'What is your ID?',
-            validate: nameInput => {
-                if (nameInput) {
+            message: 'What is your employee ID? (Required)',
+            validate: id => {
+                if (id) {
                     return true;
                 } else {
-                    console.log ('Please enter a valid work ID!')
+                    console.log ('Please enter a valid work ID!');
+                    return false;
                 }
             }
         },
@@ -40,27 +45,35 @@ const promptUser = () => {
             type: 'input',
             name: 'email',
             message: "What is your email?",
-            validate: nameInput => {
-                if (nameInput ) {
+            validate: email => {
+                if (email) {
                     return true;
                 } else {
-                    console.log ('Please enter an email!')
+                    console.log ('Please enter an email!');
+                    return false;
                 }
             }
         },
         {
             type: 'input',
-            name: 'github',
-            message: "What is your github username?",
-            validate: nameInput => {
-                if (nameInput ) {
+            name: 'officeNumber',
+            message: "What is your office Number? (Required)",
+            validate: officeNumber => {
+                if (officeNumber) {
                     return true;
                 } else {
-                    console.log ('Please enter an email!')
+                    console.log ('Please enter your office number!');
+                    return false;
                 }
             }
         },
-    ]);
-}
+    ]).then(promptAnswers => {
+        console.log(promptAnswers);
+        const { name,id, email, officeNumber } = managerInput;
+        const manager = new Manager(name, id, email, officeNumber);
 
-startPromptUser()
+        teamMembersArray.push(manager);
+    })
+};
+
+promptAddManager()
