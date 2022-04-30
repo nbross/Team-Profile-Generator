@@ -9,9 +9,12 @@ const inquirer = require('inquirer');
 const jest = require('jest');
 const path = require('path');
 //Page Generator
-const buildPage = require('./src/generate-page');
+const generateTeamPage = require('./src/generate-page');
 //Empty Team Members Array
 const teamMembersArray = [];
+//
+const DIST_DIR = path.resolve(__dirname, "dist")
+const outputPath = path.join(DIST_DIR, "team-page.html");
 
 const promptAddManager = () => {
     console.log(`
@@ -24,8 +27,8 @@ const promptAddManager = () => {
             type: 'input',
             name: 'name',
             message: 'What is your name? (Required)',
-            validate: nameInput => {
-                if (nameInput) {
+            validate: managerName => {
+                if (managerName) {
                     return true;
                 } else {
                     console.log ('Please enter your name!');
@@ -165,8 +168,8 @@ const promptAddEngineer = () => {
         },
     ]).then(promptAnswers => {
         console.log(promptAnswers);
-        const { engineerName, id, email, github } = promptAnswers;
-        const engineer = new Engineer(engineerName, id, email, github);
+        const { name, id, email, github } = promptAnswers;
+        const engineer = new Engineer(name, id, email, github);
 
         teamMembersArray.push(engineer);
         promptChoiceMenu();
@@ -234,8 +237,8 @@ const promptAddIntern = () => {
         },
     ]).then(promptAnswers => {
         console.log(promptAnswers);
-        const { internName, id, email, school } = promptAnswers;
-        const intern = new Intern(internName, id, email, school);
+        const { name, id, email, school } = promptAnswers;
+        const intern = new Intern(name, id, email, school);
 
         teamMembersArray.push(intern);
         promptChoiceMenu();
@@ -243,7 +246,18 @@ const promptAddIntern = () => {
 };
 
 const finishTeam = () => {
-    
+    console.log(`
+    ===========================================
+    Congrats! You Finished Building Your Team!
+    Feel Free To Check Out The Generated Page!
+    ===========================================
+    `);
+
+    // Create the output directory if the output path doesn't exist
+    if (!fs.existsSync(DIST_DIR)) {
+        fs.mkdirSync(DIST_DIR)
+    }
+    fs.writeFileSync(outputPath, generateTeamPage(teamMembersArray), "utf-8");
 }
 
 promptAddManager()
