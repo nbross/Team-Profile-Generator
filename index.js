@@ -76,4 +76,30 @@ const promptAddManager = () => {
     })
 };
 
+const promptChoiceMenu = () => {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'choiceMenu',
+            message: 'Please use the menu below to select which option you would like to continue with:',
+            choices: ['add an engineer', 'add an intern', 'finish building your team']
+        }])
+        .then(choicePicked => {
+            switch (choicePicked.choiceMenu) {
+                case "add an engineer":
+                    promptAddEngineer();
+                    break;
+                case "add an intern":
+                    promptAddIntern();
+                    break;
+                default:
+                    finishTeam();
+            }
+        });
+};
+
+const promptAddEngineer = () => {
+
+}
+
 promptAddManager()
