@@ -12,7 +12,7 @@ const path = require('path');
 const generateTeamPage = require('./src/generate-page');
 //Empty Team Members Array
 const teamMembersArray = [];
-//
+// Paths
 const DIST_DIR = path.resolve(__dirname, "dist")
 const outputPath = path.join(DIST_DIR, "team-page.html");
 
