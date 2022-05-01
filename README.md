@@ -36,13 +36,15 @@ The following necessary dependencies must be installed to run the application pr
 ## How to run this Bad Boy? Check out my sweet video down Below!
 [A walkthrough video of the Team Profile Generator](https://youtu.be/VopO_Oe2aaI)
 
-# Test
+## Run App
 The following command is needed to run the app: node index.js
+
+## Test
 Also if you wanna run the actual tests run the command: npm test
 
 ## Screenshot 
 
-![Team-Profile-Generator]()
+![Team-Profile-Generator](./Assets/images/2022-05-01.png)
 
 ## Repo link
 
